@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html ng-app="menuApp">
+
+<head>
+  <title>ANGULAR JS TEST</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+     <div class="container">
+         <br><br><br>
+         test test
+        <ul class="nav nav-tabs" role="tablist">
+          <li ng-class="{active:menuCtr.isSelected(1)}">
+            <a ng-click="menuCtr.select(1)" role="tab">Appetizer</a>
+          </li>
+          <li ng-class="{active:menuCtr.isSelected(2)}">
+            <a ng-click="menuCtr.select(2)" role="tab">Main Course</a>
+          </li>
+          <li ng-class="{active:menuCtr.isSelected(3)}">
+            <a ng-click="menuCtr.select(3)" role="tab">Dessert</a>
+          </li>
+          <li ng-class="{active:menuCtr.isSelected(4)}">
+            <a ng-click="menuCtr.select(4)" role="tab">Beverage</a>
+          </li>
+        </ul>
+         <br>
+
+         <div class="tab-content">
+            <div class="row tab-pane fade in active" ng-controller="menuController as menuCtr">
+                  <ul ng-repeat="dish in menuCtr.dishes | filter:menuCtr.filterTxt">
+                      <li>{{dish.name}}</li>
+                      <li>$&nbsp;{{dish.price}}</li>
+                      <li>{{dish.color}}</li>
+                      <li>{{dish.category}}</li>
+                  </ul>   <br>
+            </div>
+        </div>
+     </div>
+
+     <script type="text/javascript" src="js/angular.js"></script>
+
+     <script>
+        var app = angular.module('menuApp', []);
+        app.controller('menuController', function() {
+            this.tab = 1;
+            this.filterTxt = '';
+
+            var dishes = [{name: 'chicken', price: '5.99', color: 'yellow', category: 'appetizer', rating: ''},
+                          {name: 'beef', price: '9.99', color: 'red', category: 'mains', rating: ''},
+                          {name: 'coke', price: '1.99', color: 'red', category: 'beverage', rating: ''},
+                          {name: 'fish', price: '12.99', color: 'orange', category: 'dessert', rating: ''}];
+            this.dishes = dishes;
+            this.select = function(setTab) {
+                this.tab = setTab;
+
+                this.filtText = '';
+
+                if (setTab === 2)
+                    this.filtText = "appetizer";
+                else if (setTab === 3)
+                    this.filtText = "mains";
+                else if (setTab === 4)
+                    this.filtText = "dessert";
+                else
+                    this.filtText = "";
+            }
+            this.isSelected = function (checkTab) {
+                return(this.tab === checkTab);
+            }
+        });
+     </script>
+</body>
+</html>
